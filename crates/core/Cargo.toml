@@ -1,0 +1,34 @@
+[package]
+name = "dawrs-core"
+version = "0.0.1"
+authors = ["XBagon <xbagon@outlook.de>", "Theo Paris <theoparisdesigns@gmail.com>"]
+edition = "2021"
+description = "DAW-like music/sound production library."
+repository = "https://github.com/theoparis/dawrs"
+license = "MIT"
+keywords = ["digital", "audio", "workstation", "daw", "music"]
+categories = ["multimedia::audio"]
+readme = "README.md"
+
+[badges]
+github = { repository = "theoparis/dawrs" }
+
+[dependencies]
+cpal = "0.13.5"
+anyhow = "1.0.57"
+plotters = "0.3.1"
+shrinkwraprs = "0.3.0"
+serde = "1.0.137"
+rand = "0.8.5"
+tinyvec = "1.6.0"
+crossbeam-channel = "0.5.4"
+take_mut = "0.2.2"
+approx = "0.5.1"
+
+[features]
+default = ["stereo"]
+
+mono = []
+stereo = []
+unlimited = []
+

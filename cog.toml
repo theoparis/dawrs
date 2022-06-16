@@ -1,0 +1,30 @@
+pre_bump_hooks = ["cargo bump {{version}}"]
+post_bump_hooks = [
+    "git push",
+    "git push origin {{version}}",
+    "cargo package",
+    "cargo publish"
+]
+
+[bump_profiles.alpha]
+pre_bump_hooks = [
+    # The target branch containing some hotfix commit
+    "git checkout release/{{latest_version}}",
+    "cargo bump {{version}}"
+]
+post_bump_hooks = [
+    "git push",
+    "git push origin {{version}}",
+    "git checkout main",
+    "git merge --no-ff release/{{latest_version}}",
+    "cargo package",
+    "cargo publish"
+]
+
+[changelog]
+path = "CHANGELOG.md"
+template = "remote"
+remote = "github.com"
+repository = "dawrs"
+owner = "theoparis"
+authors = [{ username = "theoparis", signature = "Theo Paris" }]

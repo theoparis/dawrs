@@ -1,0 +1,10 @@
+target/
+*.env*
+*.log*
+*.DS_Store*
+!*.example*
+Cargo.lock
+flamegraph.svg
+*.png
+perf.data
+perf.data.old 
