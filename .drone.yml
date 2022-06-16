@@ -7,6 +7,6 @@ steps:
   - name: lint
     image: instrumentisto/rust:nightly-alpine
     commands:
-      - apk -UvX http://dl-cdn.alpinelinux.org/alpine/edge/main add -u musl-dev pkgconfig alsa-lib-dev
+      - apk -UvX http://dl-cdn.alpinelinux.org/alpine/edge/main add -u musl-dev pkgconfig alsa-lib-dev expat-dev cmake
       - cargo fmt --all -- --check
       - cargo clippy -- -Dwarnings
