@@ -14,14 +14,14 @@ readme = "README.md"
 github = { repository = "theoparis/dawrs" }
 
 [dependencies]
-cpal = "0.15.1"
+cpal = "0.15.2"
 anyhow = "1.0.70"
 plotters = "0.3.4"
 shrinkwraprs = "0.3.0"
-serde = "1.0.158"
+serde = "1.0.160"
 rand = "0.8.5"
 tinyvec = "1.6.0"
-crossbeam-channel = "0.5.7"
+crossbeam-channel = "0.5.8"
 take_mut = "0.2.2"
 approx = "0.5.1"
 
