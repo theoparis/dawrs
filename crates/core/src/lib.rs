@@ -119,13 +119,6 @@ pub use crate::cpal::Cpal;
 pub use poly_sample::PolySample;
 pub use sample_timing::SampleTiming;
 
-pub mod prelude {
-	pub use crate::{
-		effect::Effect, generator::Generator, patch::*, poly_sample, Cpal,
-		PolySample, SampleTiming,
-	};
-}
-
 #[cfg(test)]
 mod tests {
 	use crate::{
@@ -133,8 +126,9 @@ mod tests {
 		generator::{
 			AdsrGenerator, Generator, SineGenerator, TriangleGenerator,
 		},
-		prelude::*,
+		patch::{MasterPatch, Patch},
 		synthesizer::BasicSynthesizer,
+		Cpal, PolySample, SampleTiming,
 	};
 
 	fn midi_id_to_frequency(midi_id: u8) -> f32 {
@@ -184,15 +178,15 @@ mod tests {
 					self.glide_length -= 1;
 				}
 
-				let mut lead = self.triangle_synth.generate(sample_timing)[0];
+				let mut lead = self.triangle_synth.generate(sample_timing).0[0];
 				//turn volume down
 				lead *= 0.1;
 
 				let mut cv = self.sine_cv.generate(sample_timing);
 				//cv map from [-1,1] to [0,1]
 				cv.linear_map(-1.0..1.0, 0.0..1.0);
-				let second_channel = 1.0 - cv[0];
-				cv.push(second_channel);
+				let second_channel = 1.0 - cv.0[0];
+				cv.0.push(second_channel);
 
 				//cv pans lead
 				lead * cv
@@ -257,8 +251,7 @@ mod tests {
 					if self.current_note_quarter_count == 0 {
 						let note_length = self.note_lengths[self.melody_index];
 						let note_length = note_length as f32;
-						self.synth
-							.play(quarter_duration * note_length as f32 - 0.2);
+						self.synth.play(quarter_duration * note_length - 0.2);
 					}
 					self.current_note_quarter_count += 1;
 				}
@@ -366,8 +359,8 @@ mod tests {
 					std::process::exit(0);
 				}
 
-				let sample_value = sine[0] * triangle[0] * adsr[0] * 0.1;
-				poly_sample!([sample_value; 2])
+				let sample_value = sine.0[0] * triangle.0[0] * adsr.0[0] * 0.1;
+				PolySample(vec![sample_value; 2])
 			}
 		}
 

@@ -19,7 +19,7 @@ impl<T: FnMut(&SampleTiming) -> PolySample + Send> Generator for T {
 
 #[cfg(test)]
 mod tests {
-	use crate::prelude::*;
+	use crate::{generator::Generator, PolySample, SampleTiming};
 	use approx::assert_abs_diff_eq;
 
 	#[test]
@@ -27,7 +27,7 @@ mod tests {
 		let mut x = 1.0;
 		let mut generator = move |_: &SampleTiming| {
 			x *= 0.5;
-			poly_sample!([x])
+			PolySample(vec![x])
 		};
 		let sample_timing = &SampleTiming {
 			sample_rate: 0.0,

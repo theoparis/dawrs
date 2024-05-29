@@ -63,7 +63,7 @@ impl Oscilloscope {
 
 		chart.draw_series(LineSeries::new(
 			self.buffer.iter().map(|(time, poly_sample)| {
-				(*time, poly_sample[self.channel as usize])
+				(*time, poly_sample.0[self.channel as usize])
 			}),
 			&RED,
 		))?;

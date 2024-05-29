@@ -47,22 +47,20 @@ impl<P: OutPatch> Cpal<P> {
 			host,
 			device,
 			config,
-			phantom: PhantomData::default(),
+			phantom: PhantomData,
 		})
 	}
 
 	pub fn play_patch(&mut self, patch: &mut P) {
 		match self.config.sample_format() {
-			cpal::SampleFormat::F32 => self.play_on::<f32>(patch).unwrap(),
-			cpal::SampleFormat::I16 => self.play_on::<i16>(patch).unwrap(),
-			cpal::SampleFormat::U16 => self.play_on::<u16>(patch).unwrap(),
+			cpal::SampleFormat::F32 => self.play_on(patch).unwrap(),
+			cpal::SampleFormat::I16 => self.play_on(patch).unwrap(),
+			cpal::SampleFormat::U16 => self.play_on(patch).unwrap(),
+			_ => {}
 		}
 	}
 
-	fn play_on<T>(&mut self, patch: &mut P) -> Result<()>
-	where
-		T: cpal::Sample,
-	{
+	fn play_on(&mut self, patch: &mut P) -> Result<()> {
 		let config: &StreamConfig = &self.config.clone().into();
 
 		let mut sample_timing = SampleTiming::new(config.sample_rate.0 as f32);
@@ -85,7 +83,7 @@ impl<P: OutPatch> Cpal<P> {
 			(|| -> Result<P> {
 				let stream = self.device.build_output_stream(
 					config,
-					move |data: &mut [T], _: &cpal::OutputCallbackInfo| {
+					move |data: &mut [f32], _: &cpal::OutputCallbackInfo| {
 						if let Some(event) = cpal_patch.patch.write_data(
 							data,
 							channels,
@@ -95,6 +93,7 @@ impl<P: OutPatch> Cpal<P> {
 						}
 					},
 					err_fn,
+					None,
 				)?;
 				stream.play().unwrap();
 				loop {

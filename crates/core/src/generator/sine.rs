@@ -1,5 +1,5 @@
 use super::Generator;
-use crate::prelude::*;
+use crate::{PolySample, SampleTiming};
 
 #[derive(Clone)]
 pub struct SineGenerator {
@@ -22,7 +22,7 @@ impl Generator for SineGenerator {
 	fn generate(&mut self, sample_timing: &SampleTiming) -> PolySample {
 		let sample_clock =
 			sample_timing.sample_clock_with_frequency(self.frequency);
-		poly_sample!([(sample_clock
+		PolySample(vec![(sample_clock
 			* self.frequency
 			* 2.0 * std::f32::consts::PI)
 			.sin()])

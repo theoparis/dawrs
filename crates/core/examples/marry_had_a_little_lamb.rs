@@ -1,8 +1,9 @@
 use dawrs_core::{
-	effect::{Delay, Oscilloscope},
+	effect::{Delay, Effect, Oscilloscope},
 	generator::{AdsrGenerator, TriangleGenerator},
-	prelude::*,
+	patch::{MasterPatch, Patch},
 	synthesizer::BasicSynthesizer,
+	Cpal, PolySample, SampleTiming,
 };
 
 #[derive(Default)]
@@ -48,7 +49,7 @@ impl Patch for MelodyPatch {
 				//wait time for last note die out
 				if self.current_note_quarter_count == 6 {
 					//self.oscilloscope.plot("oscilloscope_output/marry_had_a_little_lamb.png").unwrap(); //uncomment to plot song
-					return poly_sample!(); //return empty sample to stop program
+					return PolySample::default(); //return empty sample to stop program
 				}
 			}
 		}

@@ -1,8 +1,9 @@
 use dawrs_core::{
-	effect::Delay,
+	effect::{Delay, Effect},
 	generator::{AdsrGenerator, TriangleGenerator},
-	prelude::*,
+	patch::{MasterPatch, Patch},
 	synthesizer::BasicSynthesizer,
+	Cpal, PolySample, SampleTiming,
 };
 use rand::random;
 
@@ -30,7 +31,7 @@ impl Patch for DrumKit {
 			//every sixteenth note
 			if clock % quarter_samples == 0 {
 				//every fourth sixteenth note -> every quarter note
-				if clock % bar_samples == quarter_samples * 0 {
+				if clock % bar_samples == 0 {
 					//first note every bar
 					self.kick.volume = 0.2; //emphasize first note
 				} else {
@@ -84,7 +85,6 @@ fn main() {
 			0.1,
 		),
 		delay: Delay::new(0.1, 0.3),
-		..DrumKit::default()
 	};
 
 	master_patch.add_patch(patch);

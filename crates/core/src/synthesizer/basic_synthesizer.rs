@@ -1,6 +1,7 @@
 use crate::{
 	generator::{AdsrGenerator, Generator},
-	prelude::*,
+	patch::Patch,
+	PolySample, SampleTiming,
 };
 
 #[derive(Clone)]
@@ -42,7 +43,7 @@ impl<G: Generator> Patch for BasicSynthesizer<G> {
 		let sample_timing = sample_timing - self.start_tick;
 
 		if self.muted {
-			poly_sample!()
+			PolySample(vec![])
 		} else {
 			let mut poly_sample = self.base_generator.generate(&sample_timing);
 
