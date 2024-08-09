@@ -5,7 +5,7 @@ name: default
 
 steps:
   - name: lint
-    image: instrumentisto/rust:nightly-alpine@sha256:2bc7bfca1e01abd79ecdd46515e804725283943cee92ab7a2721094e03ecb39b
+    image: instrumentisto/rust:nightly-alpine@sha256:92fc8e4c73ea39c92e12eebebf88712edca9bb9c37b6dec43c714b2441b6df21
     commands:
       - apk -UvX http://dl-cdn.alpinelinux.org/alpine/edge/main add -u musl-dev pkgconfig alsa-lib-dev expat-dev cmake build-base freetype-dev
       - cargo fmt --all -- --check
