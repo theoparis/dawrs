@@ -1,6 +1,6 @@
 steps:
   - name: lint
-    image: instrumentisto/rust:nightly-alpine@sha256:48937897634099c946123b4b74d3db1da99d0aed4da20cd4e24e6f735a817731
+    image: instrumentisto/rust:nightly-alpine@sha256:a0be21ec6c737af0c9fd185825f04d1c071c3631a8487df41971c5b511a2ed2b
     commands:
       - apk -UvX http://dl-cdn.alpinelinux.org/alpine/edge/main add -u musl-dev pkgconf alsa-lib-dev expat-dev cmake build-base freetype-dev
       - cargo fmt --all -- --check
